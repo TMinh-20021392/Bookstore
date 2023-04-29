@@ -5,7 +5,7 @@
         public Pager()
         {
         }
-        public string SearchText { get; set; } = "";
+        public string? SearchText { get; set; } = "";
         public string Controller { get; set; } = "";
         public string Action { get; set; } = "Index";
 

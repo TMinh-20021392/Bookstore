@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Books.Models;
 
 namespace Books.Models
 {
@@ -10,6 +11,8 @@ namespace Books.Models
 
         // In order to add any model to the database, we need an entry here
         public DbSet<Book> Book { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,5 +27,7 @@ namespace Books.Models
                 property.SetScale(2);
             }
         }
+
+        public DbSet<Books.Models.Customer>? Customer { get; set; }
     }
 }

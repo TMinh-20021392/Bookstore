@@ -2,7 +2,81 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary income">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-dollar-sign fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Total Income</span>
+                <h1 class="display-6 fw-bold">@ViewBag.Sum</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary orders">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-shopping-cart fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Total Orders</span>
+                <h1 class="display-6 fw-bold">@ViewBag.TotalOrders</h1>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="fw-bold">Book By Genre</h5>
+            </div>
+            <ejs-accumulationchart id="doughnutchart" enableSmartLabels background="#1a222b">
+                <e-accumulation-series-collection>
+                    <e-accumulation-series dataSource="@ViewBag.Doughnut" xName="category" yName="amount" innerradius="0%" legendshape=Diamond>
+                        <e-accumulationseries-datalabel name="formattedamount" visible></e-accumulationseries-datalabel>
+                    </e-accumulation-series>
+                </e-accumulation-series-collection>
+                <e-accumulationchart-legendsettings position=Top toggleVisibility=false>
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-accumulationchart-legendsettings>
+                <e-accumulationchart-tooltipsettings enable>
+                    <e-tooltipsettings-textstyle color="#0000FF"></e-tooltipsettings-textstyle>
+                </e-accumulationchart-tooltipsettings>
+            </ejs-accumulationchart>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="fw-bold">Weekly Orders</h5>
+            </div>
+            <ejs-chart id="spline-chart" background="#1a222b">
+                <e-chart-primaryxaxis valueType=Category>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis minimum=0 interval=1>
+                    <e-majorgridlines width="1" color="#32414d" dashArray="3,5"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-series-collection>
+                    <e-series dataSource="@ViewBag.SplineChartData" xName="Day" 
+                    yName="Orders" Name="Orders" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline" width="3"></e-series>
+                </e-series-collection>
+                <e-chart-legendsettings position=Top alignment=Far toggleVisibility=false>
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-chart-legendsettings>
+                <e-chart-tooltipsettings enable shared>
+                    <e-tooltipsettings-textstyle color="#0000FF"></e-tooltipsettings-textstyle>
+                </e-chart-tooltipsettings>
+            </ejs-chart>
+        </div>
+    </div>
 </div>
