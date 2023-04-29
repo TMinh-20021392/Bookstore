@@ -21,20 +21,20 @@ namespace Books.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-              return _context.Customer != null ? 
-                          View(await _context.Customer.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Customer'  is null.");
+              return _context.Customers != null ? 
+                          View(await _context.Customers.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Customers'  is null.");
         }
 
         // GET: Customers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Customer == null)
+            if (id == null || _context.Customers == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer
+            var customer = await _context.Customers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
             {
@@ -55,7 +55,7 @@ namespace Books.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,Name,Address,PhoneNo")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -69,12 +69,12 @@ namespace Books.Controllers
         // GET: Customers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Customer == null)
+            if (id == null || _context.Customers == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer.FindAsync(id);
+            var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
             {
                 return NotFound();
@@ -87,7 +87,7 @@ namespace Books.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,PhoneNo")] Customer customer)
         {
             if (id != customer.Id)
             {
@@ -120,12 +120,12 @@ namespace Books.Controllers
         // GET: Customers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Customer == null)
+            if (id == null || _context.Customers == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer
+            var customer = await _context.Customers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
             {
@@ -140,14 +140,14 @@ namespace Books.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Customer == null)
+            if (_context.Customers == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Customer'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Customers'  is null.");
             }
-            var customer = await _context.Customer.FindAsync(id);
+            var customer = await _context.Customers.FindAsync(id);
             if (customer != null)
             {
-                _context.Customer.Remove(customer);
+                _context.Customers.Remove(customer);
             }
             
             await _context.SaveChangesAsync();
@@ -156,7 +156,7 @@ namespace Books.Controllers
 
         private bool CustomerExists(int id)
         {
-          return (_context.Customer?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Customers?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Books.Controllers
 
             var books = await _context.Book.ToListAsync();
             var orders = await _context.Orders.ToListAsync();
+            var customers = await _context.Customers.ToListAsync();
 
             List<Order> weeklyorder = orders.Where(o => o.Bought >= start && o.Bought <= end).ToList();
 
@@ -54,6 +55,23 @@ namespace Books.Controllers
                                           Day = day,
                                           Orders = o == null ? 0 : o.Orders
                                       };
+
+            //Recent orders and customers
+            ViewBag.Recent = orders.OrderByDescending(x => x.Bought).Take(5)
+                .Join(books, o => o.BookId, b => b.Id, (o, b) => new { o.CustomerId, o.BookId, b.Name, o.Bought })
+                .Join(customers, o => o.CustomerId, c => c.Id, (o, c) => new { BName = o.Name, CName = c.Name, Date = o.Bought }).ToList();
+
+            //Top 5 books
+            ViewBag.TopBook = orders.Join(books, o => o.BookId, b => b.Id,
+                    (o, b) => new
+                    {
+                        b.Id,
+                        b.Name,
+                        b.Author,
+                        b.Genre
+                    })
+                .GroupBy(b => b.Id).OrderByDescending(g => g.Count()).Take(5).SelectMany(a => a);
+
             return View();
         }
     }

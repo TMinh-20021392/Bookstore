@@ -27,7 +27,5 @@ namespace Books.Models
                 property.SetScale(2);
             }
         }
-
-        public DbSet<Books.Models.Customer>? Customer { get; set; }
     }
 }

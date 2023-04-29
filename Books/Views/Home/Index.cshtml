@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@*Summary widget*@
 <div class="row mb-4">
     <div class="col-md-4">
         <div class="d-flex flex-row widget summary income">
@@ -27,6 +27,8 @@
     </div>
     
 </div>
+
+@*Charts*@
 <div class="row mb-4">
     <div class="col-md-4">
         <div class="widget chart">
@@ -77,6 +79,42 @@
                     <e-tooltipsettings-textstyle color="#0000FF"></e-tooltipsettings-textstyle>
                 </e-chart-tooltipsettings>
             </ejs-chart>
+        </div>
+    </div>
+</div>
+
+@*Tables*@
+<div class="row">
+    <div class="col-md-6">
+        <div class="widget">
+            <div class="p-4">
+                <h5 class="fw-bold">Recent Orders</h5>
+            </div>
+            <div class="px-4 pb-4">
+                <ejs-grid id="recent-orders" dataSource="ViewBag.Recent" gridLines="None">
+                    <e-grid-columns>
+                        <e-grid-column headertext="Customer" field="CName"></e-grid-column>
+                        <e-grid-column headertext="Book" field="BName"></e-grid-column>
+                        <e-grid-column headertext="Date" field="Date" type="date" format="MMM-dd-yy"></e-grid-column>
+                    </e-grid-columns>
+                </ejs-grid>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="widget h-100">
+            <div class="p-4">
+                <h5 class="fw-bold">Most Popular Books</h5>
+            </div>
+            <div class="px-4 pb-4">
+                <ejs-grid id="top-books" dataSource="ViewBag.TopBook" gridLines="None">
+                    <e-grid-columns>
+                        <e-grid-column headertext="Name" field="Name"></e-grid-column>
+                        <e-grid-column headertext="Genre" field="Genre"></e-grid-column>
+                        <e-grid-column headertext="Author" field="Author"></e-grid-column>
+                    </e-grid-columns>
+                </ejs-grid>
+            </div>
         </div>
     </div>
 </div>
