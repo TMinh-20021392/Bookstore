@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Most popular book";
+}
+
+@*Tables*@
+<div class="row">
+    <div class="col-md-6">
+        <div class="widget h-100">
+            <div class="p-4">
+                <h5 class="fw-bold">Most Popular Books</h5>
+            </div>
+            <div class="px-4 pb-4">
+                <ejs-grid id="top-books" dataSource="ViewBag.TopBook" gridLines="None">
+                    <e-grid-columns>
+                        <e-grid-column headertext="Name" field="Name"></e-grid-column>
+                        <e-grid-column headertext="Genre" field="Genre"></e-grid-column>
+                        <e-grid-column headertext="Author" field="Author"></e-grid-column>
+                    </e-grid-columns>
+                </ejs-grid>
+                <div class="timer fa-pull-right">
+                    @ViewBag.TopBookTime
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

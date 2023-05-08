@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Books.Models;
+using System.Data.Common;
+using System.Data;
+using System.Data.Entity.Infrastructure;
 
 namespace Books.Models
 {

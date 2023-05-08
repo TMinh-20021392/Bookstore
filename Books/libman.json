@@ -9,6 +9,10 @@
     {
       "library": "w3-css@4.1.0",
       "destination": "wwwroot/lib/w3-css/"
+    },
+    {
+      "library": "select2@4.0.13",
+      "destination": "wwwroot/select2/"
     }
   ]
 }

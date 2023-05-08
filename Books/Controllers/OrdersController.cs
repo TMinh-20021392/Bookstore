@@ -17,6 +17,22 @@ namespace Books.Controllers
         {
             _context = context;
         }
+        private void PopulateBookDropDownList(object? selectedDepartment = null)
+        {
+            var departmentsQuery = from d in _context.Book
+                                   orderby d.Name
+                                   select d;
+            var t = departmentsQuery.Take(10);
+            ViewBag.BookId = new SelectList(t.AsNoTracking(), "Id", "Name", selectedDepartment);
+        }
+        private void PopulateCustomerDropDownList(object? selectedDepartment = null)
+        {
+            var departmentsQuery = from d in _context.Customers
+                                   orderby d.Name
+                                   select d;
+            var t = departmentsQuery;
+            ViewBag.CustomerId = new SelectList(t.AsNoTracking(), "Id", "Name", selectedDepartment);
+        }
 
         // GET: Orders
         public async Task<IActionResult> Index()
@@ -48,17 +64,15 @@ namespace Books.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["BookId"] = new SelectList(_context.Book, "Id", "Name");
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id");
+            PopulateBookDropDownList();
+            PopulateCustomerDropDownList();
             return View();
         }
 
         // POST: Orders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CustomerId,BookId,Bought")] Order order)
+        public async Task<IActionResult> Create([Bind("Id,CustomerId,BookId")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +80,8 @@ namespace Books.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BookId"] = new SelectList(_context.Book, "Id", "Name", order.BookId);
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", order.CustomerId);
+            PopulateBookDropDownList(order.BookId);
+            PopulateCustomerDropDownList(order.CustomerId);
             return View(order);
         }
 
@@ -84,14 +98,12 @@ namespace Books.Controllers
             {
                 return NotFound();
             }
-            ViewData["BookId"] = new SelectList(_context.Book, "Id", "Name", order.BookId);
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", order.CustomerId);
+            PopulateBookDropDownList();
+            PopulateCustomerDropDownList();
             return View(order);
         }
 
         // POST: Orders/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerId,BookId,Bought")] Order order)
@@ -121,8 +133,8 @@ namespace Books.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BookId"] = new SelectList(_context.Book, "Id", "Name", order.BookId);
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", order.CustomerId);
+            PopulateBookDropDownList(order.BookId);
+            PopulateCustomerDropDownList(order.CustomerId);
             return View(order);
         }
 

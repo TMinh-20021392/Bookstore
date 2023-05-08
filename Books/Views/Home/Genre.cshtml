@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Genre";
+}
+@*Summary widget*@
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="fw-bold">Book By Genre</h5>
+            </div>
+            <ejs-accumulationchart id="doughnutchart" enableSmartLabels background="#1a222b">
+                <e-accumulation-series-collection>
+                    <e-accumulation-series dataSource="@ViewBag.Doughnut" xName="category" yName="amount" innerradius="0%" legendshape=Diamond>
+                        <e-accumulationseries-datalabel name="formattedamount" visible></e-accumulationseries-datalabel>
+                    </e-accumulation-series>
+                </e-accumulation-series-collection>
+                <e-accumulationchart-legendsettings position=Top toggleVisibility=false>
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-accumulationchart-legendsettings>
+                <e-accumulationchart-tooltipsettings enable>
+                    <e-tooltipsettings-textstyle color="#0000FF"></e-tooltipsettings-textstyle>
+                </e-accumulationchart-tooltipsettings>
+            </ejs-accumulationchart>
+            <div class="timer fa-pull-right">
+                @ViewBag.DoughnutTime
+            </div>
+        </div>
+    </div>
+</div>

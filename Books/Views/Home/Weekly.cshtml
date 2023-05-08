@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Weekly Order";
+}
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="fw-bold">Weekly Orders</h5>
+            </div>
+            <ejs-chart id="spline-chart" background="#1a222b">
+                <e-chart-primaryxaxis valueType=Category>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis minimum=0 interval=1>
+                    <e-majorgridlines width="1" color="#32414d" dashArray="3,5"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-series-collection>
+                    <e-series dataSource="@ViewBag.SplineChartData" xName="Day"
+                              yName="Orders" Name="Orders" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline" width="3"></e-series>
+                </e-series-collection>
+                <e-chart-legendsettings position=Top alignment=Far toggleVisibility=false>
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-chart-legendsettings>
+                <e-chart-tooltipsettings enable shared>
+                    <e-tooltipsettings-textstyle color="#0000FF"></e-tooltipsettings-textstyle>
+                </e-chart-tooltipsettings>
+            </ejs-chart>
+            <div class="timer fa-pull-right">
+                @ViewBag.SplineChartDataTime
+            </div>
+        </div>
+    </div>
+</div>

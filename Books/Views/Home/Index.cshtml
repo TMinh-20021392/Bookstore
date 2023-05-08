@@ -12,6 +12,9 @@
                 <span class="lead">Total Income</span>
                 <h1 class="display-6 fw-bold">@ViewBag.Sum</h1>
             </div>
+            <div class="timer fa-pull-right">
+                @ViewBag.SumTime
+            </div>
         </div>
     </div>
     <div class="col-md-4">
@@ -23,44 +26,26 @@
                 <span class="lead">Total Orders</span>
                 <h1 class="display-6 fw-bold">@ViewBag.TotalOrders</h1>
             </div>
+            <div class="timer fa-pull-right">
+                @ViewBag.TotalOrdersTime
+            </div>
         </div>
     </div>
     
 </div>
 
-@*Charts*@
-<div class="row mb-4">
-    <div class="col-md-4">
-        <div class="widget chart">
-            <div class="p-4">
-                <h5 class="fw-bold">Book By Genre</h5>
-            </div>
-            <ejs-accumulationchart id="doughnutchart" enableSmartLabels background="#1a222b">
-                <e-accumulation-series-collection>
-                    <e-accumulation-series dataSource="@ViewBag.Doughnut" xName="category" yName="amount" innerradius="0%" legendshape=Diamond>
-                        <e-accumulationseries-datalabel name="formattedamount" visible></e-accumulationseries-datalabel>
-                    </e-accumulation-series>
-                </e-accumulation-series-collection>
-                <e-accumulationchart-legendsettings position=Top toggleVisibility=false>
-                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
-                </e-accumulationchart-legendsettings>
-                <e-accumulationchart-tooltipsettings enable>
-                    <e-tooltipsettings-textstyle color="#0000FF"></e-tooltipsettings-textstyle>
-                </e-accumulationchart-tooltipsettings>
-            </ejs-accumulationchart>
-        </div>
-    </div>
+<div class="row">
     <div class="col-md-8">
         <div class="widget chart">
             <div class="p-4">
-                <h5 class="fw-bold">Weekly Orders</h5>
+                <h5 class="fw-bold">Hieu Nang CouchDb vs MSSQL</h5>
             </div>
-            <ejs-chart id="spline-chart" background="#1a222b">
+            <ejs-chart id="spline" background="#fff">
                 <e-chart-primaryxaxis valueType=Category>
                     <e-majorgridlines width="0"></e-majorgridlines>
                     <e-majorticklines width="0"></e-majorticklines>
                 </e-chart-primaryxaxis>
-                <e-chart-primaryyaxis minimum=0 interval=1>
+                <e-chart-primaryyaxis minimum=0 interval=10>
                     <e-majorgridlines width="1" color="#32414d" dashArray="3,5"></e-majorgridlines>
                     <e-majorticklines width="0"></e-majorticklines>
                     <e-linestyle width="0"></e-linestyle>
@@ -69,8 +54,10 @@
                     <e-chartarea-border width="0"></e-chartarea-border>
                 </e-chart-chartarea>
                 <e-series-collection>
-                    <e-series dataSource="@ViewBag.SplineChartData" xName="Day" 
-                    yName="Orders" Name="Orders" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline" width="3"></e-series>
+                    <e-series dataSource="@ViewBag.Hieunang" xName="q"
+                              yName="val1" Name="Couch" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline" width="3"></e-series>
+                    <e-series dataSource="@ViewBag.Hieunang" xName="q"
+                              yName="val2" Name="Sql" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline" width="3"></e-series>
                 </e-series-collection>
                 <e-chart-legendsettings position=Top alignment=Far toggleVisibility=false>
                     <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
@@ -82,39 +69,38 @@
         </div>
     </div>
 </div>
-
-@*Tables*@
-<div class="row">
-    <div class="col-md-6">
-        <div class="widget">
-            <div class="p-4">
-                <h5 class="fw-bold">Recent Orders</h5>
-            </div>
-            <div class="px-4 pb-4">
-                <ejs-grid id="recent-orders" dataSource="ViewBag.Recent" gridLines="None">
-                    <e-grid-columns>
-                        <e-grid-column headertext="Customer" field="CName"></e-grid-column>
-                        <e-grid-column headertext="Book" field="BName"></e-grid-column>
-                        <e-grid-column headertext="Date" field="Date" type="date" format="MMM-dd-yy"></e-grid-column>
-                    </e-grid-columns>
-                </ejs-grid>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="widget h-100">
-            <div class="p-4">
-                <h5 class="fw-bold">Most Popular Books</h5>
-            </div>
-            <div class="px-4 pb-4">
-                <ejs-grid id="top-books" dataSource="ViewBag.TopBook" gridLines="None">
-                    <e-grid-columns>
-                        <e-grid-column headertext="Name" field="Name"></e-grid-column>
-                        <e-grid-column headertext="Genre" field="Genre"></e-grid-column>
-                        <e-grid-column headertext="Author" field="Author"></e-grid-column>
-                    </e-grid-columns>
-                </ejs-grid>
-            </div>
-        </div>
-    </div>
-</div>
+<style>
+    .timer {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        font-weight: bold;
+        margin-top: 0;
+    }
+</style>
+<script>
+    pointRender=function(args) {
+        if (args.point.index === 2) {
+            args.fill = 'red'
+        }
+    },
+    textRender = function (args) {
+            if (args.data[i].y === 2) {
+                args.text.visible = false;
+            }
+            else {
+                args.cancel = true;
+            }
+    }
+    var total = [];
+    function onSeriesRender(args) {
+        for (var i = 0; i < args.data.length; i++) {
+            if (!total[args.data[i].x]) total[args.data[i].x] = 0;
+            total[args.data[i].x] = total[args.data[i].x] + parseInt(args.data[i].y);
+        }
+    }
+    function onTextRender(args) {
+        var percentage = (parseInt(args.text) / total[args.point.x]) * 100;
+        percentage = percentage % 1 === 0 ? percentage : percentage.toFixed(2);
+        args.text = percentage + "%";
+    }
+</script>

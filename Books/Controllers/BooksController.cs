@@ -49,24 +49,23 @@ namespace Books.Controllers
         public IActionResult Index(string SearchText = "", int pg = 1, int pageSize = 5)
         {
             List<Book> Book;
+            List<Book> b;
 
             if (pg < 1) pg = 1;
+            int recsCount = _context.Book.Count();
+
+            int recSkip = (pg - 1) * pageSize;
 
 
             if (SearchText != "" && SearchText != null)
             {
-                Book = _context.Book
-                .Where(p => p.Name.Contains(SearchText))
-                .ToList();
+                b = _context.Book.Where(p => p.Name.Contains(SearchText)).Skip(recSkip).Take(pageSize).ToList();
             }
             else
-                Book = _context.Book.ToList();
+            {
+                b = _context.Book.Skip(recSkip).Take(pageSize).ToList();
+            }
 
-            int recsCount = Book.Count;
-
-            int recSkip = (pg - 1) * pageSize;
-
-            List<Book> b = Book.Skip(recSkip).Take(pageSize).ToList();
 
             Pager SearchPager = new(recsCount, pg, pageSize) { Action = "Index", Controller = "Books", SearchText = SearchText };
             ViewBag.SearchPager = SearchPager;

@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Recent";
+}
+@*Summary widget*@
+<div class="row">
+    <div class="col-md-6">
+        <div class="widget">
+            <div class="p-4">
+                <h5 class="fw-bold">Recent Orders</h5>
+            </div>
+            <div class="px-4 pb-4">
+                <ejs-grid id="recent-orders" dataSource="ViewBag.Recent" gridLines="None">
+                    <e-grid-columns>
+                        <e-grid-column headertext="Customer" field="CName"></e-grid-column>
+                        <e-grid-column headertext="Book" field="BName"></e-grid-column>
+                        <e-grid-column headertext="Date" field="Date" type="date" format="MMM-dd-yy"></e-grid-column>
+                    </e-grid-columns>
+                </ejs-grid>
+                <div class="timer fa-pull-right">
+                    @ViewBag.RecentTime
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
